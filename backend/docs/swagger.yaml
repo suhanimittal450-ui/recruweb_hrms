@@ -1,0 +1,186 @@
+openapi: 3.0.0
+
+info:
+  title: Enterprise HRMS API
+  version: 1.0.0
+  description: Enterprise HRMS Backend API Documentation
+
+servers:
+  - url: http://localhost:5000/api/v1
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+tags:
+  - name: Authentication
+  - name: Employees
+  - name: Attendance
+  - name: Leave
+  - name: Payroll
+  - name: Assets
+  - name: Dashboard
+
+paths:
+  /search:
+    get:
+      tags:
+        - Search
+      summary: Global Search
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Search Results
+  /notifications:
+    get:
+      tags:
+        - Notifications
+      summary: User Notifications
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Success
+  /dashboard:
+    get:
+      tags:
+        - Dashboard
+      summary: Dashboard Overview
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Dashboard Data
+  /assets:
+    get:
+      tags:
+        - Assets
+      summary: Asset List
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Success
+  /payroll:
+    get:
+      tags:
+        - Payroll
+      summary: Payroll List
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Success
+  /leave:
+    get:
+      tags:
+        - Leave
+      summary: Get Leave Requests
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Success
+
+    post:
+      tags:
+        - Leave
+      summary: Apply Leave
+      security:
+        - bearerAuth: []
+      responses:
+        "201":
+          description: Leave Applied
+  /attendance:
+    get:
+      tags:
+        - Attendance
+      summary: Attendance List
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Success
+
+  /attendance/clock-in:
+    post:
+      tags:
+        - Attendance
+      summary: Employee Clock In
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Clock In Successful
+
+  /attendance/clock-out:
+    post:
+      tags:
+        - Attendance
+      summary: Employee Clock Out
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Clock Out Successful
+  /employees:
+    get:
+      tags:
+        - Employees
+      summary: Get All Employees
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Employee List
+
+    post:
+      tags:
+        - Employees
+      summary: Create Employee
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+      responses:
+        "201":
+          description: Employee Created
+  /health:
+    get:
+      summary: API Health Check
+      responses:
+        "200":
+          description: API Running
+
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+
+      summary: Login
+
+      requestBody:
+        required: true
+
+        content:
+          application/json:
+            schema:
+              type: object
+
+              properties:
+                email:
+                  type: string
+
+                password:
+                  type: string
+
+      responses:
+        "200":
+          description: Login Successful
